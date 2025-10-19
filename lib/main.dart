@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:pragmatic_flutter/providers/dashboard_provider.dart';
 import 'package:provider/provider.dart';
+import 'app_layout.dart';
 
-import 'dashboard_screen.dart';
+import 'package:pragmatic_flutter/providers/dashboard_provider.dart';
+import 'package:pragmatic_flutter/providers/navigation_provider.dart';
+import 'package:pragmatic_flutter/providers/theme_provider.dart'; // Đã tách theme
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => DashboardProvider())],
-      child: const MyApp(),
+      providers: [
+        // 1. ThemeProvider quản lý ThemeMode và ThemeData
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        // 2. Các Providers quản lý trạng thái màn hình
+        ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
+      ],
+      child: const MyApp(), // Chuyển MyApp thành con của MultiProvider
     ),
   );
 }
@@ -16,32 +24,22 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Responsive Dashboard',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.grey[50],
-        cardTheme: CardThemeData(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
-      home: DashboardScreen(),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        final themeMode = themeProvider.themeMode;
+
+        return MaterialApp(
+          title: 'LMS Midnight',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeProvider.lightTheme,
+          darkTheme: ThemeProvider.darkTheme,
+          themeMode: themeMode,
+
+          home: const AppLayout(),
+        );
+      },
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder(color: Colors.red);
   }
 }

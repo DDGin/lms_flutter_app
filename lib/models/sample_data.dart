@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../chartdata.dart';
-import '../product.dart';
-import '../recent_activity.dart';
+import 'chartdata.dart';
+import 'product.dart';
+import 'recent_activity.dart';
 
 class SampleData {
-  static final pages = <String>[
-    'Dashboard',
-    'Analytics',
-    'Products',
-    'Orders',
-    'Customers',
-    'Settings',
-    'Profile',
-  ];
   static final chartData = <ChartData>[
     ChartData('Mon', 45, 30),
     ChartData('Tue', 56, 40),
@@ -111,5 +102,14 @@ class SampleData {
       75,
       'https://fdn2.gsmarena.com/vv/pics/asus/asus-rog-phone-7-1.jpg',
     ),
+  ];
+  static final List<IconData> icons = [
+    Icons.dashboard_outlined,
+    Icons.analytics_outlined,
+    Icons.shopping_bag_outlined,
+    Icons.receipt_long_outlined,
+    Icons.people_alt_outlined,
+    Icons.settings_outlined,
+    Icons.person_outline,
   ];
 }

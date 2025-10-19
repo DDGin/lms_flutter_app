@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:pragmatic_flutter/chartdata.dart';
+import 'package:pragmatic_flutter/models/chartdata.dart';
 
-class ChartPainter extends CustomPainter{
+class ChartPainter extends CustomPainter {
   final List<ChartData> data;
 
   ChartPainter(this.data);
@@ -23,30 +23,27 @@ class ChartPainter extends CustomPainter{
     final path1 = Path();
     final path2 = Path();
 
-    double maxValue = data.map((e) => max(e.value1,e.value2)).reduce(max);
+    double maxValue = data.map((e) => max(e.value1, e.value2)).reduce(max);
     double stepX = size.width / (data.length - 1);
 
-    for(int i = 0; i < data.length; i++){
+    for (int i = 0; i < data.length; i++) {
       double x = i * stepX;
       double y1 = size.height - (data[i].value1 / maxValue) * size.height;
       double y2 = size.height - (data[i].value2 / maxValue) * size.height;
 
-      if(i == 0){
+      if (i == 0) {
         path1.moveTo(x, y1);
         path2.moveTo(x, y2);
-      } else{
+      } else {
         path1.lineTo(x, y1);
         path2.lineTo(x, y2);
       }
     }
 
-    canvas.drawPath(path1,paint1);
-    canvas.drawPath(path2,paint2);
+    canvas.drawPath(path1, paint1);
+    canvas.drawPath(path2, paint2);
   }
-
-
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-
 }

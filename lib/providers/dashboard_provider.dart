@@ -1,21 +1,12 @@
-// lib/providers/dashboard_provider.dart
 import 'package:flutter/material.dart';
+import 'package:pragmatic_flutter/views/theme/theme.dart';
+import '../models/sample_data.dart';
+import '../models/chartdata.dart';
+import '../models/recent_activity.dart';
+import '../models/product.dart';
 
-class DashboardProvider extends ChangeNotifier {
-  int _selectedIndex = 0;
-  bool _isDarkMode = false;
-
-  int get selectedIndex => _selectedIndex;
-
-  bool get isDarkMode => _isDarkMode;
-
-  void toggleDarkMode() {
-    _isDarkMode = !_isDarkMode;
-    notifyListeners();
-  }
-
-  void setPage(int index) {
-    _selectedIndex = index;
-    notifyListeners();
-  }
+class DashboardProvider with ChangeNotifier {
+  final List<ChartData> chartData = SampleData.chartData;
+  final List<RecentActivity> recentActivity = SampleData.recentActivity;
+  final List<Product> topProducts = SampleData.topProducts;
 }
